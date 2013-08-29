@@ -1,0 +1,181 @@
+@charset "utf-8";
+
+/* item_index */
+
+
+/* タグ絞り込みBOX */
+.initials{
+	float:left;
+	margin:0px;
+	padding:1px;
+	width:196px;
+}
+ul.initialIdxs{
+	margin:0;
+	padding:0;
+	font-size:13px;
+}
+
+.link_box {
+	margin: 10px 0px 0px;
+	padding: 0px;
+	width: 200px;
+	border:1px solid silver;
+}
+.index_panel{
+	height:60px;
+	width:200px;
+}
+.list_panel{
+	clear:both;
+	display:block;
+	padding-top:0;
+	overflow-y:scroll;
+	height:300px;
+}
+.list_panel ul li{
+	padding:2px;
+}
+.list_panel ul{
+	margin:0;
+	padding:4px;
+}
+/* ************* */
+/* アカサタナ... */
+/* ************* */
+.initialIdx{
+	margin:1px 1px 0px 1px;
+	padding:1px;
+	display:block;
+	width:11px;
+	text-align:center;
+	float:left;
+	font-size:90%;
+	background-color:#F0F9FF;
+	border:1px solid #7DC8FF;
+}
+/* default */
+.initialIdx.initialIdxDef{
+	width:20px;
+	overflow-x:hidden;
+}
+/* 1件以上 */
+.initialIdx.itemexistsTrue{
+	cursor:pointer;
+	background-color:#F0F9FF;
+	color:#444444;
+	color:#06F;
+}
+.initialIdx.itemexistsTrue:hover{
+	color:#FF33FF;
+	background-color:#FFFBFB;
+	border:1px solid #FF99FF;
+}
+/* 0件 */
+.initialIdx.itemexistsFalse{
+	cursor:default;
+	font-weight:normal;
+	padding:1px 2px 1px 1px;
+	margin:1px 0px 0px 1px;
+	color:#bbbbbb;
+	background-color:#eeeeee;
+	border:#CCC 1px dotted;
+}
+
+/* 選択中 */
+.initialIdx.currentIdx{
+	font-weight:bold;
+	color:#FF33FF;
+	background-color:#FDF;
+	border:1px solid #ff8888;
+}
+
+/* ************* */
+/* アイウエオ... */
+/* ************* */
+.initial{
+	margin:1px;
+	padding:1px;
+	display:block;
+	float:left;
+	font-size:90%;
+	width:13px;
+	text-align:center;
+	background-color:#FFFBFB;
+	border:1px solid #FF99FF;
+	color:#FF33FF;
+}
+/* 選択中 */
+.initial.currentInitail{
+	font-weight:bold;
+	background-color:#FDF;
+	border-color:#F00;
+}
+/* 1件以上 */
+.initial.itemexistsTrue{
+	cursor:pointer;
+}
+.initial.itemexistsTrue:hover{
+	font-weight:bold;
+	border-color:red;
+	color:#ffffff;
+	background-color:#FAF;
+}
+/* 0件 */
+.initial.itemexistsFalse{
+	cursor:default;
+	color:#bbbbbb;
+	background-color:#eeeeee;
+	border:#CCC 1px dotted;
+}
+
+
+/* 50音枠 */
+#index_panel .initial50{
+	float:right;
+}
+.initial50{
+	width:170px;
+	height:26px;
+	clear:both;
+	text-align:center;
+}
+
+/* 50音枠内各行 */
+.initialRow{
+	margin:0;
+	padding:0;
+	display:none;
+}
+
+/* ナ行ハ行は中央寄せ */
+.initialRow-na,
+.initialRow-ha{
+	float: none;
+	width:100px;
+	margin-left: auto;
+	margin-right: auto;
+}
+/* ハ行以降は右寄せ */
+.initialRow-ma,
+.initialRow-ya,
+.initialRow-ra,
+.initialRow-wa{
+	float:right;
+}
+
+/* 自動生成される、行毎のタグリスト領域 */
+.item_part_box{
+	display:none;
+	position:relative;
+	top:0;
+	left:0;
+	padding-top:0;
+}
+
+.list_panel .item_list{
+	font-size:12px;
+}
+.list_panel a:hover{
+	color:red;
+}

@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<title>list_index.js 50音索引ライブラリ</title>
+<link href="list_index.css" media="screen" rel="stylesheet" type="text/css" />
+<style tyle="text/css">
+<!--
+pre{
+	font-size:10px;
+	border:1px solid #888888;
+	background-color:#eeeeee;
+	padding:8px;
+	margin:8px;
+}
+dt{
+	font-weight:bold;
+}
+h1{
+	background-color:#cccccc;
+	padding:4px;
+	margin-left:1px;
+}
+h2{
+	background-color:#dddddd;
+	padding:3px;
+	margin-left:3px;
+}
+h3{
+	background-color:#eeeeee;
+	padding:2px;
+	margin-left:5px;
+}
+div.misc *{
+	margin-left:6px;
+}
+div.misc{
+	float:left;
+	margin:10px;
+	margin-top:0px;
+	width:740px;
+}
+dd{
+	padding-left:1em;
+}
+p{
+	word-break:break-all;
+}
+-->
+</style>
+</head>
+<body>
+<h1>list_index.js 50音索引ライブラリ</h1>
+<div style="float:left;">
+	<div class="link_box" id="link_box1">
+		<div class="index_panel" id="index_panel">
+			<div class='item_result_area'>INDEX DEMO(<span class='item_result_count'></span>/<span class='item_all_count'></span>)</div>
+		</div>
+		<div class="list_panel" id="list_panel">
+			<ul class="item_list">
+				<li><a href="#feature">#list_index.js 特徴</a></li>
+				<li><a href="#usage">#使い方</a></li>
+				<li><a href="#download">#ダウンロード</a></li>
+				<li><a href="#license">#ライセンス</a></li>
+				<li><a href="http://www.coneco.net/">coneco.net</a></li>
+				<li><a href="http://www.travel.co.jp/">Travel.jp</a></li>
+				<li><a href="http://www.vrg.jp/">Venture Republic Inc.</a></li>
+	        </ul>
+        </div>
+	</div>
+</div>
+<div class='misc'>
+<h2 id='feature'>list_index.js 特徴</h2>
+<ul>
+	<li>JSON形式のリストを元に、50音索引とリストを生成、表示します。</li>
+	<li>「ア・カ・サ・タ・ナ･･･」で絞り込んだ後「ア・イ・ウ・エ・オ」でさらに絞り込めます。</li>
+	<li><a href="http://www.coneco.net/s/ca_280">coneco.net ファッション</a>用に作成したスクリプトに汎用性をもたせたものです(若干動作が異なります)。</li>
+	<li>jQuery依存です。</li>
+	<li>Ajax等であとから項目を追加できます。</li>
+	<li>画面内に複数設置可能。独立して動作します。</li>
+	<li>「ヴァ・ヴィ・ヴ・ヴェ・ヴォ」は「バ・ビ・ブ・ベ・ボ」に対応し、「ア行」と「ハ行」の両方に表示されます。</li>
+	<li>見た目は全てcssで制御。</li>
+	<li>デフォルト表示はHTMLで記述可能。</li>
+</ul>
+
+<h2 id='usage'>list_index.js 使い方</h2>
+<h3>Javascript</h3>
+<p>
+jQueryとlist_index.js、css。
+</p>
+<pre>
+&lt;link href="list_index.css" media="screen" rel="stylesheet" type="text/css" />
+
+&lt;script type="text/javascript" src="http://www.google.com/jsapi">&lt;/script> 
+&lt;script type="text/javascript"> 
+google.load("jquery", "1");
+&lt;/script> 
+&lt;script src="list_index.js" type="text/javascript">&lt;/script>
+</pre>
+<h3>索引とリストを表示するためのボックスを用意</h3>
+<pre>
+&lt;div id="index_panel">&lt;/div>
+&lt;div id="list_panel">&lt;/div>
+</pre>
+<h3>リストをJSON形式で用意する。</h3>
+<pre>
+var arrBrands = [
+	{'name':'ブロンディ','japanese_index':'ブロンディ','url':'http://www.coneco.net/s/ca_280-tg_3:471'},
+	{'name':'ヨネックス','japanese_index':'ヨネックス','url':'http://www.coneco.net/s/ca_280-tg_3:572'},
+	：
+}
+</pre>
+<dl>
+	<dt>name</dt>
+	<dd>表示するテキスト</dd>
+	<dt>japanese_index</dt>
+	<dd>索引生成に使用</dd>
+	<dt>url</dt>
+	<dd>リンク先URL</dd>
+</dl>
+
+<h3>索引を生成する</h3>
+<pre>
+createListIndexies(
+	"brand"		//リスト自体を区別するID
+	,"index_panel"	//索引を表示する要素のID
+	,"list_panel"	//リストを表示する要素のID
+	,arrBrands   	//JSON形式のデータ
+);
+</pre>
+<dl>
+	<dt>第1パラメタ</dt>
+	<dd>リスト自体を区別するID。1ページ内に複数の索引を設置する場合は別のIDを指定してください。</dd>
+	<dt>第2パラメタ</dt>
+	<dd>索引を表示する要素のID</dd>
+	<dt>第3パラメタ</dt>
+	<dd>リストを表示する要素のID</dd>
+	<dt>第4パラメタ</dt>
+	<dd>JSON形式のリストデータ</dd>
+</dl>
+<h3>リストを追加する</h3>
+<p>事前にcreateListIndexies()で索引を生成する必要があります。
+</p>
+<pre>
+addListItems(
+	"brand"		//createListIndexiesで指定したものと同じ
+	,"index_panel"	//createListIndexiesで指定したものと同じ
+	,"list_panel"	//createListIndexiesで指定したものと同じ
+	,arrBrands2   //JSON形式のリストデータ（追加分）
+);
+</pre>
+<dl>
+	<dt>第1パラメタ</dt>
+	<dd>リスト自体を区別するID。1ページ内に複数の索引を設置する場合は別のIDを指定してください。</dd>
+	<dt>第2パラメタ</dt>
+	<dd>索引を表示する要素のID</dd>
+	<dt>第3パラメタ</dt>
+	<dd>リストを表示する要素のID</dd>
+	<dt>第4パラメタ</dt>
+	<dd>JSON形式のリストデータ</dd>
+</dl>
+<h3>件数表示</h3>
+<p>索引用のボックス内に以下のように'item_result_count'、'item_all_count'というclassを持つ要素があれば、索引選択時等に件数を表示します。
+<pre>
+	&lt;div id="index_panel">
+		&lt;div class='item_result_area'>INDEXサンプル(&lt;span class='item_result_count'>&lt;/span>/&lt;span class='item_all_count'>&lt;/span>)&lt;/div>
+	&lt;/div>
+</pre>
+<h3>デザイン</h3>
+<p>
+list_index.jsではスタイルの制御は行っていませんので（classの制御のみ）、
+デザインについてはcss等で行う必要があります。list_index.cssを参考にしてください。
+</p>
+
+<h2 id='download'>ダウンロード</h2>
+<p>
+	<a href="list_index.zip">list_index.js Ver.1.0.0</a>
+</p>
+<h2 id='license'>ライセンス</h2>
+<p>
+	<a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
+</p>
+</div>
+
+	<div class="link_box" style="float:right;border:1px solid red;width:174px;">
+		<div class="index_panel" id="index_panel2"></div>
+		<div class="list_panel" id="list_panel2"></div>
+	</div>
+
+<div style="clear:both;margin:10px;font-size:85%;text-align:right">
+<address>Copyright &copy; 2010 <a target="_blank" href="http://www.vrg.jp/">Venture Republic Inc.</a> All rights reserved.</address>
+</div>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script> 
+<script type="text/javascript"> 
+google.load("jquery", "1");
+</script> 
+<script src="list_index.js?aaa" type="text/javascript"></script>
+<script type='text/javascript'>
+<!--
+    var arrBrands = [
+{'name':'ブロンディ','japanese_index':'ブロンディ','url':'http://www.coneco.net/s/ca_280-tg_3:471'},
+{'name':'ヨネックス','japanese_index':'ヨネックス','url':'http://www.coneco.net/s/ca_280-tg_3:572'},
+{'name':'ハーディ・エイミス','japanese_index':'ハーディ・エイミス','url':'http://www.coneco.net/s/ca_280-tg_3:373'},
+{'name':'グンゼ','japanese_index':'グンゼ','url':'http://www.coneco.net/s/ca_280-tg_3:176'},
+{'name':'ビッグジョン','japanese_index':'ビッグジョン','url':'http://www.coneco.net/s/ca_280-tg_3:409'},
+{'name':'ロベルタディカメリーノ','japanese_index':'ロベルタディカメリーノ','url':'http://www.coneco.net/s/ca_280-tg_3:634'},
+{'name':'カーハート','japanese_index':'カーハート','url':'http://www.coneco.net/s/ca_280-tg_3:125'},
+{'name':'ローズバッド','japanese_index':'ローズバッド','url':'http://www.coneco.net/s/ca_280-tg_3:627'},
+{'name':'マッキントッシュ','japanese_index':'マッキントッシュ','url':'http://www.coneco.net/s/ca_280-tg_3:527'},
+{'name':'マッドフット','japanese_index':'マッドフット','url':'http://www.coneco.net/s/ca_280-tg_3:531'},
+{'name':'ビバユー','japanese_index':'ビバユー','url':'http://www.coneco.net/s/ca_280-tg_3:411'},
+{'name':'ヒロココシノ','japanese_index':'ヒロココシノ','url':'http://www.coneco.net/s/ca_280-tg_3:420'},
+{'name':'エヴィス','japanese_index':'エヴィス','url':'http://www.coneco.net/s/ca_280-tg_3:84'},
+{'name':'ミッシェルクラン','japanese_index':'ミッシェルクラン','url':'http://www.coneco.net/s/ca_280-tg_3:545'},
+{'name':'バリー','japanese_index':'バリー','url':'http://www.coneco.net/s/ca_280-tg_3:392'},
+{'name':'ジャンフランコフェレ','japanese_index':'ジャンフランコフェレ','url':'http://www.coneco.net/s/ca_280-tg_3:238'},
+{'name':'エーアンドジー','japanese_index':'エーアンドジー','url':'http://www.coneco.net/s/ca_280-tg_3:85'},
+{'name':'マウジー','japanese_index':'マウジー','url':'http://www.coneco.net/s/ca_280-tg_3:521'},
+{'name':'テイラー東洋','japanese_index':'テイラートウヨウ','url':'http://www.coneco.net/s/ca_280-tg_3:328'},
+{'name':'ジバンシー','japanese_index':'ジバンシー','url':'http://www.coneco.net/s/ca_280-tg_3:226'},
+{'name':'エックスオーエックスオー','japanese_index':'エックスオーエックスオー','url':'http://www.coneco.net/s/ca_280-tg_3:92'},
+{'name':'セオリー','japanese_index':'セオリー','url':'http://www.coneco.net/s/ca_280-tg_3:277'},
+{'name':'コスチュームナショナル','japanese_index':'コスチュームナショナル','url':'http://www.coneco.net/s/ca_280-tg_3:194'},
+{'name':'リーフ','japanese_index':'リーフ','url':'http://www.coneco.net/s/ca_280-tg_3:593'},
+{'name':'ズーヨーク','japanese_index':'ズーヨーク','url':'http://www.coneco.net/s/ca_280-tg_3:257'},
+{'name':'シビラ','japanese_index':'シビラ','url':'http://www.coneco.net/s/ca_280-tg_3:227'},
+{'name':'ラゴ','japanese_index':'ラゴ','url':'http://www.coneco.net/s/ca_280-tg_3:577'},
+{'name':'セリーヌ','japanese_index':'セリーヌ','url':'http://www.coneco.net/s/ca_280-tg_3:282'},
+{'name':'トニーラマ','japanese_index':'トニーラマ','url':'http://www.coneco.net/s/ca_280-tg_3:339'},
+{'name':'シーシークロス','japanese_index':'シーシークロス','url':'http://www.coneco.net/s/ca_280-tg_3:218'},
+{'name':'カリマー','japanese_index':'カリマー','url':'http://www.coneco.net/s/ca_280-tg_3:132'},
+{'name':'ヴァレンチノ','japanese_index':'ヴァレンチノ','url':'http://www.coneco.net/s/ca_280-tg_3:67'},
+{'name':'マルタン・マルジェラ','japanese_index':'マルタン・マルジェラ','url':'http://www.coneco.net/s/ca_280-tg_3:536'},
+{'name':'フレッドペリー','japanese_index':'フレッドペリー','url':'http://www.coneco.net/s/ca_280-tg_3:467'},
+{'name':'マリ・クレール','japanese_index':'マリ・クレール','url':'http://www.coneco.net/s/ca_280-tg_3:534'},
+{'name':'エゴイスト','japanese_index':'エゴイスト','url':'http://www.coneco.net/s/ca_280-tg_3:89'},
+{'name':'ヘインズ','japanese_index':'ヘインズ','url':'http://www.coneco.net/s/ca_280-tg_3:473'},
+{'name':'モスキーノ','japanese_index':'モスキーノ','url':'http://www.coneco.net/s/ca_280-tg_3:561'},
+{'name':'トミー・ヒルフィガー','japanese_index':'トミー・ヒルフィガー','url':'http://www.coneco.net/s/ca_280-tg_3:340'},
+{'name':'キヤ','japanese_index':'キヤ','url':'http://www.coneco.net/s/ca_280-tg_3:144'},
+{'name':'エトロ','japanese_index':'エトロ','url':'http://www.coneco.net/s/ca_280-tg_3:97'},
+{'name':'エコー','japanese_index':'エコー','url':'http://www.coneco.net/s/ca_280-tg_3:90'},
+{'name':'ファッジ','japanese_index':'ファッジ','url':'http://www.coneco.net/s/ca_280-tg_3:425'},
+{'name':'ジェリービーンズ','japanese_index':'ジェリービーンズ','url':'http://www.coneco.net/s/ca_280-tg_3:223'},
+{'name':'クリッパー','japanese_index':'クリッパー','url':'http://www.coneco.net/s/ca_280-tg_3:163'},
+{'name':'メガネ','japanese_index':'メガネ','url':'http://www.coneco.net/s/ca_280-tg_3:556'},
+{'name':'グランドキャニオン','japanese_index':'グランドキャニオン','url':'http://www.coneco.net/s/ca_280-tg_3:159'},
+{'name':'ミナペルホネン','japanese_index':'ミナペルホネン','url':'http://www.coneco.net/s/ca_280-tg_3:548'},
+{'name':'アークテリクス','japanese_index':'アークテリクス','url':'http://www.coneco.net/s/ca_280-tg_3:9'},
+{'name':'トラサルディ','japanese_index':'トラサルディ','url':'http://www.coneco.net/s/ca_280-tg_3:342'},
+{'name':'スケッチャーズ','japanese_index':'スケッチャーズ','url':'http://www.coneco.net/s/ca_280-tg_3:258'},
+{'name':'ロエン','japanese_index':'ロエン','url':'http://www.coneco.net/s/ca_280-tg_3:625'},
+{'name':'シュガーケーン','japanese_index':'シュガーケーン','url':'http://www.coneco.net/s/ca_280-tg_3:242'},
+{'name':'ツモリチサト','japanese_index':'ツモリチサト','url':'http://www.coneco.net/s/ca_280-tg_3:316'},
+{'name':'マーク・ジェイコブス','japanese_index':'マーク・ジェイコブス','url':'http://www.coneco.net/s/ca_280-tg_3:515'},
+{'name':'ブルーカルト','japanese_index':'ブルーカルト','url':'http://www.coneco.net/s/ca_280-tg_3:460'},
+{'name':'ジャーナルスタンダード','japanese_index':'ジャーナルスタンダード','url':'http://www.coneco.net/s/ca_280-tg_3:232'},
+{'name':'ルイ・ヴィトン','japanese_index':'ルイ・ヴィトン','url':'http://www.coneco.net/s/ca_280-tg_3:603'},
+{'name':'ジルスチュアート','japanese_index':'ジルスチュアート','url':'http://www.coneco.net/s/ca_280-tg_3:253'},
+{'name':'クリップ','japanese_index':'クリップ','url':'http://www.coneco.net/s/ca_280-tg_3:164'},
+{'name':'パトリックコックス','japanese_index':'パトリックコックス','url':'http://www.coneco.net/s/ca_280-tg_3:388'},
+{'name':'ミキハウス','japanese_index':'ミキハウス','url':'http://www.coneco.net/s/ca_280-tg_3:540'},
+{'name':'ヘリーハンセン','japanese_index':'ヘリーハンセン','url':'http://www.coneco.net/s/ca_280-tg_3:486'},
+{'name':'メルモ','japanese_index':'メルモ','url':'http://www.coneco.net/s/ca_280-tg_3:559'},
+{'name':'ニナ・リッチ','japanese_index':'ニナ・リッチ','url':'http://www.coneco.net/s/ca_280-tg_3:363'},
+{'name':'ペリーエリス','japanese_index':'ペリーエリス','url':'http://www.coneco.net/s/ca_280-tg_3:485'},
+{'name':'ハムネット','japanese_index':'ハムネット','url':'http://www.coneco.net/s/ca_280-tg_3:390'},
+{'name':'シップス','japanese_index':'シップス','url':'http://www.coneco.net/s/ca_280-tg_3:224'}
+];
+
+    var arrBrands2 = [
+{'name':'ハムネット','japanese_index':'ハムネット','url':'http://www.coneco.net/s/ca_280-tg_3:390'},
+{'name':'スーパーハッカ','japanese_index':'スーパーハッカ','url':'http://www.coneco.net/s/ca_280-tg_3:255'},
+{'name':'ビルウォールレザー','japanese_index':'ビルウォールレザー','url':'http://www.coneco.net/s/ca_280-tg_3:418'},
+{'name':'クロエ','japanese_index':'クロエ','url':'http://www.coneco.net/s/ca_280-tg_3:170'},
+{'name':'ロロピアーナ','japanese_index':'ロロピアーナ','url':'http://www.coneco.net/s/ca_280-tg_3:637'},
+{'name':'シマノ','japanese_index':'シマノ','url':'http://www.coneco.net/s/ca_280-tg_3:228'},
+{'name':'レッセパッセ','japanese_index':'レッセパッセ','url':'http://www.coneco.net/s/ca_280-tg_3:616'},
+{'name':'リーバイス','japanese_index':'リーバイス','url':'http://www.coneco.net/s/ca_280-tg_3:592'},
+{'name':'ヒステリックグラマー','japanese_index':'ヒステリックグラマー','url':'http://www.coneco.net/s/ca_280-tg_3:407'},
+{'name':'チャンピオン','japanese_index':'チャンピオン','url':'http://www.coneco.net/s/ca_280-tg_3:315'},
+{'name':'アルファ','japanese_index':'アルファ','url':'http://www.coneco.net/s/ca_280-tg_3:40'},
+{'name':'キラーループ','japanese_index':'キラーループ','url':'http://www.coneco.net/s/ca_280-tg_3:152'},
+{'name':'エミリオプッチ','japanese_index':'エミリオプッチ','url':'http://www.coneco.net/s/ca_280-tg_3:102'},
+{'name':'フープディドゥ','japanese_index':'フープディドゥ','url':'http://www.coneco.net/s/ca_280-tg_3:430'},
+{'name':'ハンティングワールド','japanese_index':'ハンティングワールド','url':'http://www.coneco.net/s/ca_280-tg_3:399'},
+{'name':'ミズノ','japanese_index':'ミズノ','url':'http://www.coneco.net/s/ca_280-tg_3:543'},
+{'name':'ドミンゴ','japanese_index':'ドミンゴ','url':'http://www.coneco.net/s/ca_280-tg_3:341'},
+{'name':'ポリス','japanese_index':'ポリス','url':'http://www.coneco.net/s/ca_280-tg_3:505'},
+{'name':'ラングラー','japanese_index':'ラングラー','url':'http://www.coneco.net/s/ca_280-tg_3:586'},
+{'name':'マリメッコ','japanese_index':'マリメッコ','url':'http://www.coneco.net/s/ca_280-tg_3:535'},
+{'name':'ダルトン','japanese_index':'ダルトン','url':'http://www.coneco.net/s/ca_280-tg_3:307'},
+{'name':'ケンゾー','japanese_index':'ケンゾー','url':'http://www.coneco.net/s/ca_280-tg_3:183'},
+{'name':'プレタポルテ','japanese_index':'プレタポルテ','url':'http://www.coneco.net/s/ca_280-tg_3:466'},
+{'name':'ジョリーブティック','japanese_index':'ジョリーブティック','url':'http://www.coneco.net/s/ca_280-tg_3:247'},
+{'name':'オニツカタイガー','japanese_index':'オニツカタイガー','url':'http://www.coneco.net/s/ca_280-tg_3:121'},
+{'name':'カステルバジャック','japanese_index':'カステルバジャック','url':'http://www.coneco.net/s/ca_280-tg_3:128'},
+{'name':'サクセス','japanese_index':'サクセス','url':'http://www.coneco.net/s/ca_280-tg_3:204'},
+{'name':'ラコステ','japanese_index':'ラコステ','url':'http://www.coneco.net/s/ca_280-tg_3:578'},
+{'name':'レノマ','japanese_index':'レノマ','url':'http://www.coneco.net/s/ca_280-tg_3:621'},
+{'name':'アレキサンダー・マックイーン','japanese_index':'アレキサンダー・マックイーン','url':'http://www.coneco.net/s/ca_280-tg_3:43'},
+{'name':'トルネードマート','japanese_index':'トルネードマート','url':'http://www.coneco.net/s/ca_280-tg_3:349'}
+];
+
+    $(document).ready(function(){
+
+		//索引を作ってリスト作成
+		createListIndexies(
+			"brand"			//リスト自体を区別するID
+			,"index_panel"	//索引を表示する要素のID
+			,"list_panel"	//リストを表示する要素のID
+	        ,arrBrands   	//JSON形式のデータ
+			,"Top"			//初期表示の索引
+		);
+/*
+		//リストを追加
+		addListItems(
+			"brand"
+			,"index_panel"
+			,"list_panel"
+	        ,arrBrands2   //JSON形式のデータ
+		);
+*/
+
+		createListIndexies(
+			"brand2"			//リスト自体を区別するID
+			,"index_panel2"	//索引を表示する要素のID
+			,"list_panel2"	//リストを表示する要素のID
+	        ,arrBrands2   	//JSON形式のデータ
+			,""
+		);
+
+    });
+// -->
+</script>
+</body>
+</html>
